@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+NO:wght@100..400&display=swap');
+/* rounded for button */
+.butonX{
+  @apply bg-red-500 text-white px-2 py-2 rounded-full
+}
+.butonEdit{
+  @apply bg-blue-500 text-white px-2 py-2 rounded-full
+}
+/* main-font-word */
+@theme{
+    --font-main :"Playwrite NO", cursive
+}
+/* image background */
+.backgroundImg{
+  @apply bg-[url('https://cdn-media.sforum.vn/storage/app/media/ctvseo_MH/%E1%BA%A3nh%20phong%20c%E1%BA%A3nh%20%C4%91%E1%BA%B9p/anh-phong-canh-dep-1.jpg')] bg-cover bg-no-repeat
+}
+/* hover scale */
+.scale{
+  @apply transition-transform hover:scale-110
+}
+@theme {
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+}
