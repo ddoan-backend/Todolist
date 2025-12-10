@@ -1,5 +1,5 @@
-import { GetData,addNewTask } from "./api.js";
-import { main,BtnAdd } from "./dom.js";
+import { GetData,addNewTask,DeleteTask } from "./api.js";
+import { main,BtnAdd,BtnDelete } from "./dom.js";
 async function start(){
     const data = await GetData()
     renderTask(data)
@@ -10,7 +10,7 @@ async function renderTask(data) {
     main.innerHTML = ""
     const html = data.map(task=>{
         return `
-        <div class="flex gap-2 items-center border-b border-black" data-id=${task.id}>
+        <div class="task flex gap-2 items-center border-b border-black py-2" data-id=${task.id}>
             <div class="checked w-6 h-6 bg-white rounded-full"></div>
             <p class="flex-1">${task.name}</p>
             <span class="butonEdit"><i class="fa-solid fa-pen"></i></span>
@@ -29,3 +29,10 @@ BtnAdd.addEventListener("click",async()=>{
     start()
 })
 /* render new task */
+main.addEventListener("click",async(e)=>{
+    const task = e.target.closest(".task")
+    const id = task.dataset.id
+    if(e.target.closest(".butonX")){
+        await DeleteTask(id)
+    }
+})

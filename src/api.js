@@ -20,3 +20,11 @@ export async function addNewTask(newtask,status) {
     }
     const res = await fetch(Api,option)
 }
+/* function for delete data */
+export async function DeleteTask(id) {
+    const option = {
+        method:"DELETE"
+    }
+    const res = await fetch(`${Api}/${id}`,option)
+}
+/* function for edit data */
