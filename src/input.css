@@ -19,15 +19,11 @@
 .scale{
   @apply transition-transform hover:scale-110
 }
-@theme {
-  --animate-wiggle: wiggle 1s ease-in-out infinite;
-  @keyframes wiggle {
-    0%,
-    100% {
-      transform: rotate(-3deg);
-    }
-    50% {
-      transform: rotate(3deg);
-    }
+ @keyframes fadeSlideIn {
+    0%   { opacity: 0; transform: translateY(-8px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
-}
+
+  .animate-fadeSlideIn {
+    animation: fadeSlideIn 0.25s ease-out forwards;
+  }
