@@ -57,3 +57,19 @@ export async function EditTask(id,newTask) {
         alert('khong the edit task')
     }
 }
+/* functon for checked */
+export async function editChecked(id,newTask) {
+    try {
+        const option ={
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newTask)
+        }
+    const res = await fetch(`${Api}/${id}`,option)
+    } catch (error) {
+        console.log('co loi khi check',error)
+        alert('khong the check')
+    }
+}

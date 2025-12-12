@@ -1,11 +1,11 @@
-import { GetTask , AddTask,DeleteTask,EditTask } from "./api.js";
-import { main,input,addBtn,modal, BtnSave,inputedit } from "./dom.js";
+import { GetTask , AddTask,DeleteTask,EditTask,editChecked } from "./api.js";
+import { main,input,addBtn,modal, BtnSave,inputedit,filter } from "./dom.js";
 
 let currentEditId = null;
-
+let allTasks = []
 async function start() {
-    const tasks = await GetTask()
-    renderTask(tasks)
+    allTasks = await GetTask()
+    applyfilter()
 }
 start()
 
@@ -14,8 +14,8 @@ function renderTask(tasks){
    const html =  tasks.map(task => {
         return `
         <div class="task flex gap-2 bg-black/30 items-center rounded-2xl px-2 py-2" data-id = ${task.id}>
-            <div class="checked w-6 h-6 ${task.completed? 'bg-green-300' : 'bg-white'}bg-white rounded-full border border-black"></div>
-            <p class="flex-1 ${task.completed? 'line-through' : ''}">${task.name}</p>
+            <div class="checked w-6 h-6 ${task.completed ? 'bg-green-300':'bg-white'} rounded-full border border-black"></div>
+            <p class="flex-1 ${task.completed ? 'line-through' : ''}">${task.name}</p>
             <span class="butonEdit"><i class="fa-solid fa-pen"></i></span>
             <span class="butonX"><i class="fa-solid fa-x"></i></span>
         </div>
@@ -57,6 +57,10 @@ main.addEventListener("click",async(e)=>{
         currentEditId = id
         modal.classList.remove("hidden")
     }
+    if(e.target.closest(".checked")){
+        await toggleChecked(task)
+        start()
+    }
 })
 BtnSave.addEventListener("click", async () => {
     const newvalue = inputedit.value.trim();
@@ -79,3 +83,32 @@ modal.addEventListener("click", (e) => {
         modal.classList.add("hidden")
     }
 })
+
+/* checked */
+async function toggleChecked(taskElement) {
+    const id = taskElement.dataset.id;
+
+    // kiểm tra trạng thái hiện tại trên UI
+    const isDone = taskElement.querySelector("p").classList.contains("line-through");
+
+    const form = {
+        completed: !isDone
+    };
+
+    await editChecked(id, form);
+}
+
+/* filter  */
+function applyfilter(){
+    const value = filter.value
+    let filtered = allTasks
+
+    if(value === "done"){
+        filtered = allTasks.filter(task=>task.completed === true)
+    }
+    if(value === "notdone"){
+        filtered = allTasks.filter(task => task.completed === false)
+    }
+    renderTask(filtered)
+}
+filter.addEventListener("change", applyfilter)
