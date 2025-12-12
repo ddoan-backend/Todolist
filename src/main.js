@@ -1,5 +1,5 @@
-import { GetTask , AddTask,DeleteTask } from "./api.js";
-import { main,input,addBtn } from "./dom.js";
+import { GetTask , AddTask,DeleteTask,EditTask } from "./api.js";
+import { main,input,addBtn,modal, BtnSave,inputedit } from "./dom.js";
 
 async function start() {
     const tasks = await GetTask()
@@ -41,7 +41,8 @@ async function addNewTask() {
         console.log("co loi xay ra")
     }
 }
-/* function for delete task */
+
+/* main listening delete anf edit */
 main.addEventListener("click",async(e)=>{
     const task = e.target.closest(".task")
     const id = task.dataset.id
@@ -50,8 +51,19 @@ main.addEventListener("click",async(e)=>{
         start()
     }
     if(e.target.closest(".butonEdit")){
-        
+        modal.classList.remove("hidden")
+        await editnewtask(id)
     }
 })
-
+async function editnewtask(id) {
+    BtnSave.addEventListener("click",async()=>{
+        const newvalue = inputedit.value.trim()
+        const form ={
+            name:newvalue
+        }
+    await EditTask(id,form)
+    start()
+    modal.classList.add("hidden")
+    })
+}
 addBtn.addEventListener("click", addNewTask)
