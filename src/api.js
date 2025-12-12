@@ -21,6 +21,7 @@ export async function AddTask(newTask) {
             body: JSON.stringify(newTask)
         }
     const res = await fetch(Api,form)
+    return await res.json()
     } catch (error) {
         console.log('co loi khi them task',error)
         alert('khong the them task')
