@@ -1,5 +1,3 @@
 export const main = document.querySelector("main")
-export const BtnAdd = document.querySelector(".addBtn")
-export const BtnDelete = document.querySelector(".butonX")
-export const BtnEdit = document.querySelector(".butonEdit")
-export const BtnSave = document.querySelector(".BtnSave")
+export const input = document.querySelector(".input")
+export const addBtn = document.querySelector(".addBtn")
