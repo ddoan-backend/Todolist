@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 <body class="flex justify-center items-center h-screen backgroundImg text-white">
-    <div class="wrapper w-[500px] min-h-[200px] bg-white/10 backdrop-blur-md rounded-2xl px-2 py-2 font-main flex flex-col gap-6">
+    <div class="wrapper w-[500px] min-h-[200px] bg-white/10 backdrop-blur-md rounded-2xl px-2 py-2 font-main flex flex-col gap-6 relative">
         <header class="flex flex-col gap-4">
             <div class="flex justify-between">
                 <p class="font-bold text-2xl">To DO List</p>
@@ -28,6 +28,11 @@
             </div> -->
         </main>
     </div>
+    <!-- modal edit -->
+     <div class="modal absolute bg-white text-black px-6 py-6 hidden">
+        <input class="inputedit border border-black px-2 py-2" type="text" placeholder="enter the task">
+        <button class="BtnSave butonX">save</button>
+     </div>
     <script type="module" src="main.js"></script>
 </body>
 </html>

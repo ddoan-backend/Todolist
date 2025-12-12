@@ -28,3 +28,13 @@ export async function DeleteTask(id) {
     const res = await fetch(`${Api}/${id}`,option)
 }
 /* function for edit data */
+export async function EditTask(id,form) {
+    const option = {
+        method: "PATCH",
+        headers: {
+                "Content-Type": "application/json"
+                 },
+        body: JSON.stringify(form)
+    }
+    const res = await fetch(`${Api}/${id}`,option)
+}
