@@ -1,4 +1,4 @@
-import { GetTask , AddTask } from "./api.js";
+import { GetTask , AddTask,DeleteTask } from "./api.js";
 import { main,input,addBtn } from "./dom.js";
 
 async function start() {
@@ -8,49 +8,50 @@ async function start() {
 start()
 
 function renderTask(tasks){
-    main.innerHTML = ""
-    tasks.forEach(task => {
-        const taskDiv = createElement(task)
-        main.appendChild(taskDiv)
-    });
-}
-
-/* function for creative element */
-function createElement(task){
-    const taskDiv = document.createElement('div')
-    taskDiv.className = 'flex gap-2 bg-black/30 items-center rounded-2xl px-3 py-2';
-    taskDiv.dataset.id = task.id
-
-    taskDiv.innerHTML = `
-            <div class="checked w-6 h-6 ${task.completed? 'bg-green-500' : 'bg-white'} bg-white rounded-full"></div>
-            <p class="flex-1 ${task.completed?'line-through' : ''}">${task.name}</p>
+    main.innerHTML = ''
+   const html =  tasks.map(task => {
+        return `
+        <div class="task flex gap-2 bg-black/30 items-center rounded-2xl" data-id = ${task.id}>
+            <div class="checked w-6 h-6 ${task.completed? 'bg-green-300' : 'bg-white'}  bg-white rounded-full"></div>
+            <p class="flex-1 ${task.completed? 'line-through' : ''}">${task.name}</p>
             <span class="butonEdit"><i class="fa-solid fa-pen"></i></span>
             <span class="butonX"><i class="fa-solid fa-x"></i></span>
-    `
-    return taskDiv
+        </div>
+        `
+    });
+    main.innerHTML = html.join("")
 }
 
 async function addNewTask() {
-    const nameTask = input.value.trim()
-
-    if(!nameTask){
-        alert('vui long nhap noi dung')
-        return
-    }
-
+    const newvalue = input.value.trim()
     const form ={
-        name: nameTask,
+        name:newvalue,
         completed:false
     }
-
+    if(!newvalue){
+        alert("vui long nhap day du")
+        return
+    }
     try {
-        const newTask = await AddTask(form)
-        const taskDiv = createElement(newTask)
-        main.appendChild(taskDiv)
+        await AddTask(form)
+        start()
         input.value = ""
     } catch (error) {
-        console.error('loi',error)
-        alert('khong the them task')
+        console.error("khong the ket noi server",error)
+        console.log("co loi xay ra")
     }
 }
-addBtn.addEventListener("click",addNewTask)
+/* function for delete task */
+main.addEventListener("click",async(e)=>{
+    const task = e.target.closest(".task")
+    const id = task.dataset.id
+    if(e.target.closest(".butonX")){
+        await DeleteTask(id)
+        start()
+    }
+    if(e.target.closest(".butonEdit")){
+        
+    }
+})
+
+addBtn.addEventListener("click", addNewTask)
